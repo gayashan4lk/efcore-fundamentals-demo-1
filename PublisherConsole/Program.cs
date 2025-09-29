@@ -7,8 +7,19 @@ using (PubContext context = new PubContext())
     Console.WriteLine("Database created (if it did not exist).");
 }
 
-AddAuthor();
+//AddAuthor();
 GetAuthors();
+AddAuthorWithBooks();
+void AddAuthorWithBooks()
+{
+    var author = new Author { FirstName = "J.K.", LastName = "Rowling" };
+    author.Books.Add(new Book { Title = "Harry potter and the philosophers stone", PublishDate = new DateOnly(2001, 10, 2) });
+    author.Books.Add(new Book { Title = "Harry potter and the half blood prince", PublishDate = new DateOnly(2009, 04, 25) });
+
+    using var context = new PubContext();
+    context.Authors.Add(author);
+    context.SaveChanges();
+}
 
 void AddAuthor()
 {

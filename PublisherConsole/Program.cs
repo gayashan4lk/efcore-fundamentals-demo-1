@@ -11,9 +11,9 @@ using (PubContext context = new PubContext())
 //AddAuthor();
 GetAuthors();
 //AddAuthorWithBooks();
-GetAuthoursWithBooks();
+GetAuthorsWithBooks();
 
-void GetAuthoursWithBooks()
+void GetAuthorsWithBooks()
 {
     using var context = new PubContext();
     var authorsWthBooks = context.Authors.Include(a => a.Books).ToList();

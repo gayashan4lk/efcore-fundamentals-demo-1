@@ -1,4 +1,5 @@
-﻿using PublisherData;
+﻿using Microsoft.EntityFrameworkCore;
+using PublisherData;
 using PublisherDomain;
 
 using (PubContext context = new PubContext())
@@ -9,7 +10,29 @@ using (PubContext context = new PubContext())
 
 //AddAuthor();
 GetAuthors();
-AddAuthorWithBooks();
+//AddAuthorWithBooks();
+GetAuthoursWithBooks();
+
+void GetAuthoursWithBooks()
+{
+    using var context = new PubContext();
+    var authorsWthBooks = context.Authors.Include(a => a.Books).ToList();
+    foreach (var author in authorsWthBooks)
+    {
+        Console.WriteLine($"{author.FirstName} {author.LastName} : ");
+        if(author.Books == null || author.Books.Count == 0)
+        {
+            Console.WriteLine("None!!");
+            continue;
+        }
+
+        foreach(var book in author.Books)
+        {
+            Console.WriteLine($"{book.Title} (Published at {book.PublishDate})");
+        }
+    }
+}
+
 void AddAuthorWithBooks()
 {
     var author = new Author { FirstName = "J.K.", LastName = "Rowling" };
